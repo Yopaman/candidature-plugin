@@ -1,5 +1,5 @@
 name: GocCandidature
-main: fr.yopaman.Goccandid.Goccandid
+main: fr.yopaman.goccandid.Goccandid
 version: 0.0.1
 description: Plugin de candidature pour le serveur Gloireocube
 author: Yopaman
