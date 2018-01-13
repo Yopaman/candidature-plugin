@@ -15,7 +15,7 @@ public class CommandCandidature implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         commandSender.sendMessage(ChatColor.AQUA + "Bienvenue ! " + ChatColor.GOLD + "Vous êtes sur le point de faire votre candidature pour rejoindre le serveur. Vous devez répondre à quelques questions très simples :");
-        commandSender.sendMessage(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Quel est votre prénom ? " + ChatColor.RESET + "" + ChatColor.GRAY + "(Répondez directement dans le chat)");
+        commandSender.sendMessage(ChatColor.BLUE + "" + ChatColor.UNDERLINE + ChatListener.questions[0] + ChatColor.RESET + "" + ChatColor.GRAY + "(Répondez directement dans le chat)");
         ChatListener.executor = commandSender.getName();
         ChatListener.setChat(true);
         return true;

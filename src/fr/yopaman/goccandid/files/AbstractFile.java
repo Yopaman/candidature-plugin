@@ -22,13 +22,13 @@ public class AbstractFile {
         this.file = new File(main.getDataFolder(), fileName);
         if (!file.exists()) {
             try {
-                main.getLogger().info("Creation de candidatures.yml");
+                main.getLogger().info("Creation d'un fichier");
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        main.getLogger().info("Chargement de candidatures.yml");
+        main.getLogger().info("Chargement d'un fichier");
         this.config = YamlConfiguration.loadConfiguration(file);
     }
 

@@ -11,11 +11,11 @@ public class Candidatures extends AbstractFile {
         super(main, "candidatures.yml");
     }
 
-    public void newCandidature(String prenom, String age, String tempsMc, String specialite, String uuid, String pseudo) {
-        config.set(uuid + "." + "pseudo", pseudo);
-        config.set(uuid + "." + "prenom", prenom);
-        config.set(uuid + "." + "age", age);
-        config.set(uuid + "." + "joue depuis", tempsMc);
-        config.set(uuid + "." + "specialite", specialite);
+    public void newCandidature(String[] responses) {
+        config.set(responses[responses.length - 2] + ".Pseudo", responses[responses.length - 1]);
+
+        for (int i = 0; i < responses.length - 2; i++) {
+            config.set(responses[responses.length - 2] + "." + "Question " + (i+1), responses[i]);
+        }
     }
 }
