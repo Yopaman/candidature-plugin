@@ -11,7 +11,19 @@ public class Config extends AbstractFile {
         super(main, "config.yml");
     }
 
-    public String[] getConfig() {
+    public String[] getQuestions() {
         return config.getStringList("questions").toArray(new String[config.getStringList("questions").size()]);
+    }
+
+    public String getMessageDebut() {
+        return config.getString("messages.debut");
+    }
+
+    public String getMessageFin() {
+        return config.getString("messages.fin");
+    }
+
+    public String[] getInsultes() {
+        return config.getStringList("insultes").toArray(new String[config.getStringList("insultes").size()]);
     }
 }

@@ -22,16 +22,23 @@ public class ChatListener implements Listener {
                     infos[status + 1] = event.getPlayer().getName();
                     status = 1;
                     event.getPlayer().sendMessage("");
-                    event.getPlayer().sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Merci, votre candidature est terminée, vous pouvez attendre la validation d'un modérateur.");
+                    event.getPlayer().sendMessage(ChatColor.BOLD + messageFin);
                     enabledChat = false;
                     GocCandid.getCandidature().newCandidature(infos);
                     GocCandid.getCandidature().save();
                     executor = "";
                     event.setCancelled(true);
                 } else {
+                    for (int i = 0; i < insultes.length; i++) {
+                        if (event.getMessage().contains(insultes[i])) {
+                            event.getPlayer().sendMessage(ChatColor.RED + "Votre message continent le mot " + ChatColor.GOLD + ChatColor.ITALIC + insultes[i] + ChatColor.RESET + ChatColor.RED + " qui est interdit. Veuillez le réécrire en supprimant ce mot.");
+                            status--;
+                            event.setCancelled(true);
+                        }
+                    }
                     infos[status - 1] = event.getMessage();
                     event.getPlayer().sendMessage("");
-                    event.getPlayer().sendMessage(ChatColor.BLUE + "" + ChatColor.UNDERLINE + questions[status]);
+                    event.getPlayer().sendMessage(ChatColor.UNDERLINE + questions[status]);
                     status++;
                     event.setCancelled(true);
                 }
@@ -41,7 +48,10 @@ public class ChatListener implements Listener {
 
     static String executor = "";
     private int status = 1;
-    static String questions[] = GocCandid.getMyConfig().getConfig();
+    static CharSequence insultes[] = GocCandid.getMyConfig().getInsultes();
+    static String messageDebut = GocCandid.getMyConfig().getMessageDebut();
+    static String messageFin = GocCandid.getMyConfig().getMessageFin();
+    public static String questions[] = GocCandid.getMyConfig().getQuestions();
     static String infos[] = new String[questions.length + 2];
     static Boolean enabledChat = true;
 

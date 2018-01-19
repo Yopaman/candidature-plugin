@@ -1,5 +1,14 @@
 questions:
-  - 'salut question 1'
-  - 'salut question 2'
-  - 'salut question 3'
-  - 'salut question 4'
+  - "question 1"
+  - "question 2"
+  - "question 3"
+  - "question 4"
+  - "etc"
+
+messages:
+  debut: "Vous êtes sur le point de faire votre candidature pour rejoindre le serveur. Vous devez répondre à quelques questions très simples :"
+  fin: "Merci, votre candidature est terminée, vous pouvez attendre la validation d'un modérateur."
+
+insultes:
+  - "pute"
+  - "lol"
