@@ -12,6 +12,17 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatListener implements Listener {
 
+    public String executor;
+
+    public ChatListener(String executor) {
+        super();
+        this.executor = executor;
+    }
+
+    public ChatListener() {
+        super();
+    }
+
     @EventHandler
     public void OnChatMessage(AsyncPlayerChatEvent event) {
         if(getChat()) {
@@ -46,19 +57,18 @@ public class ChatListener implements Listener {
         }
     }
 
-    static String executor = "";
     private int status = 1;
-    static CharSequence insultes[] = GocCandid.getMyConfig().getInsultes();
-    static String messageDebut = GocCandid.getMyConfig().getMessageDebut();
-    static String messageFin = GocCandid.getMyConfig().getMessageFin();
-    public static String questions[] = GocCandid.getMyConfig().getQuestions();
-    static String infos[] = new String[questions.length + 2];
-    static Boolean enabledChat = true;
+    public CharSequence insultes[] = GocCandid.getMyConfig().getInsultes();
+    public String messageDebut = GocCandid.getMyConfig().getMessageDebut();
+    public String messageFin = GocCandid.getMyConfig().getMessageFin();
+    public String questions[] = GocCandid.getMyConfig().getQuestions();
+    public String infos[] = new String[questions.length + 2];
+    public Boolean enabledChat = true;
 
-    static void setChat(boolean chat) {
+    public void setChat(boolean chat) {
         enabledChat = chat;
     }
-    static boolean getChat() {
+    public boolean getChat() {
         return enabledChat;
     }
 }

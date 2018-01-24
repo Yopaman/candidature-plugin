@@ -18,13 +18,7 @@ public class GocCandid extends JavaPlugin {
     @Override
     public void onEnable() {
         loadDb();
-        getServer().getPluginManager().registerEvents(new ChatListener(), this);
         getCommand("candidature").setExecutor(new CommandCandidature());
-    }
-
-    @Override
-    public void onDisable() {
-        candidatures.save();
     }
 
     private void loadDb() {
