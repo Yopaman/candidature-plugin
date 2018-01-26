@@ -28,21 +28,42 @@ public class CommandCandidature implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            if (!GocCandid.getCandidature().checkIfExist(commandSender)) {
+            if (commandSender.hasPermission("goccandid.candidature")) {
+                if (!GocCandid.getCandidature().checkIfExist(commandSender)) {
 
-                plugin.factory.withFirstPrompt(new ConvFirstPrompt(true)).thatExcludesNonPlayersWithMessage("Seul les joueurs peuvent faire leur candidature !")
-                        .withPrefix(new ConvPrefix()).buildConversation((Conversable) commandSender).begin();
-                return false;
-            } else {
-                commandSender.sendMessage(ChatColor.RED + "Votre candidature a déjà été acceptée.");
+                    plugin.factory.withFirstPrompt(new ConvFirstPrompt(true)).thatExcludesNonPlayersWithMessage("Seul les joueurs peuvent faire leur candidature !")
+                            .withPrefix(new ConvPrefix()).buildConversation((Conversable) commandSender).begin();
+                    return false;
+                } else {
+                    commandSender.sendMessage(ChatColor.RED + "Votre candidature a déjà été acceptée.");
+                }
             }
-        } else if (args[0].equals("listnew")) {
-            commandSender.sendMessage(GocCandid.getCandidature().getUnaccepted());
-        } else if(args[0].equals("get")) {
-            if (args.length > 1) {
-                commandSender.sendMessage(GocCandid.getCandidature().getOne(args[1]));
+        } else if (args[0].equalsIgnoreCase("listnew")) {
+            if (commandSender.hasPermission("goccandid.candidature.listnew")) {
+                commandSender.sendMessage(GocCandid.getCandidature().getUnaccepted());
             } else {
-                return false;
+                commandSender.sendMessage("Vous n'avez pas la permission d'executer cette commande !");
+            }
+        } else if(args[0].equalsIgnoreCase("get")) {
+            if (commandSender.hasPermission("goccandid.candidature.get")) {
+                if (args.length > 1) {
+                    commandSender.sendMessage(GocCandid.getCandidature().getOne(args[1]));
+                } else {
+                    return false;
+                }
+            } else {
+                commandSender.sendMessage("Vous n'avez pas la permission d'executer cette commande !");
+            }
+        } else if(args[0].equalsIgnoreCase("accept")) {
+            if (commandSender.hasPermission("goccandid.candidature.accept")) {
+                if (args.length > 1) {
+                    commandSender.sendMessage(GocCandid.getCandidature().accept(args[1]));
+                    GocCandid.getCandidature().save();
+                } else {
+                    return false;
+                }
+            } else {
+                commandSender.sendMessage("Vous n'avez pas la permission d'executer cette commande !");
             }
         } else {
             return false;
@@ -55,11 +76,6 @@ public class CommandCandidature implements CommandExecutor, TabCompleter {
         List<String> completions = Arrays.asList("listnew", "accept", "refuse", "get");
 
         if (args.length == 1) {
-            for (int i = 0; i < completions.size(); i++) {
-                if (completions.get(i).startsWith(args[i])) {
-                    return completions;
-                }
-            }
             return completions;
         }
         return null;

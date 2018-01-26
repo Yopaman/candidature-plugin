@@ -6,9 +6,7 @@ import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
-
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class ConvPrompt extends StringPrompt {
 

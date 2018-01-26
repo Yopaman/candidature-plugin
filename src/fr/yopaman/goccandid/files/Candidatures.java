@@ -23,9 +23,9 @@ public class Candidatures extends AbstractFile {
     public void newCandidature(HashMap responses, String pseudo, String uuid) {
         config.set(pseudo.toLowerCase() + ".uuid", uuid);
         for (int i = 0; i < responses.size(); i++) {
-            config.set(pseudo + "." + GocCandid.getMyConfig().getQuestions()[i], responses.get(GocCandid.getMyConfig().getQuestions()[i]));
+            config.set(pseudo.toLowerCase() + "." + GocCandid.getMyConfig().getQuestions()[i], responses.get(GocCandid.getMyConfig().getQuestions()[i]));
         }
-        config.set(pseudo + ".validation", "false");
+        config.set(pseudo.toLowerCase() + ".validation", "false");
     }
 
     public String getUnaccepted() {
@@ -40,7 +40,7 @@ public class Candidatures extends AbstractFile {
         }
 
         if (result.equals("")) {
-            result = ChatColor.GOLD + "" + ChatColor.BOLD + "Toutes les candidatures sont déjà validées:)";
+            result = ChatColor.GOLD + "" + ChatColor.BOLD + "Toutes les candidatures sont déjà validées :)";
         }
 
         return result;
@@ -66,7 +66,7 @@ public class Candidatures extends AbstractFile {
     public String getOne(String pseudo) {
         ConfigurationSection candid = config.getConfigurationSection(pseudo.toLowerCase());
         String candidResult = ChatColor.GOLD + "" + ChatColor.UNDERLINE + pseudo + ChatColor.RESET + "\n";
-        if (config.get(pseudo) != null) {
+        if (config.get(pseudo.toLowerCase()) != null) {
             for (String key : candid.getKeys(false)) {
                 candidResult = candidResult + ChatColor.BLUE + "" + ChatColor.BOLD + key + " : " + ChatColor.RESET + "" + ChatColor.AQUA + candid.get(key) + "\n";
             }
@@ -75,5 +75,15 @@ public class Candidatures extends AbstractFile {
         }
 
         return candidResult;
+    }
+
+    public String accept(String pseudo) {
+        pseudo = pseudo.toLowerCase();
+        if (config.get(pseudo) != null) {
+            config.set(pseudo + ".validation", "true");
+            return ChatColor.GREEN + "La candidature de " + pseudo + " a été acceptée.";
+        } else {
+            return ChatColor.RED + "Ce joueur n'a pas fait de candidature ou n'existe pas.";
+        }
     }
 }
