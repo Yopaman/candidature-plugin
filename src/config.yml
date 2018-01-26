@@ -6,9 +6,10 @@ questions:
   - "etc"
 
 messages:
-  debut: "Vous êtes sur le point de faire votre candidature pour rejoindre le serveur. Vous devez répondre à quelques questions très simples :"
-  fin: "Merci, votre candidature est terminée, vous pouvez attendre la validation d'un modérateur."
+  debut: "§9Bienvenue ! §bVous êtes sur le point de faire votre candidature pour rejoindre le serveur. Vous devez répondre à quelques questions très simples :"
+  fin: "§5Merci, votre candidature est terminée, vous pouvez attendre la validation d'un modérateur."
 
 insultes:
-  - "pute"
-  - "lol"
+  - "insulte1"
+  - "insulte2"
+  - "etc"

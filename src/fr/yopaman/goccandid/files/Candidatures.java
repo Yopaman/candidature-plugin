@@ -9,25 +9,23 @@ import fr.yopaman.goccandid.GocCandid;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.entity.Player;
 
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Candidatures extends AbstractFile {
     public Candidatures(GocCandid main) {
         super(main, "candidatures.yml");
     }
 
-    public void newCandidature(String[] responses) {
-        config.set(responses[responses.length - 1] + ".uuid", responses[responses.length - 2]);
-
-        for (int i = 0; i < responses.length - 2; i++) {
-            config.set(responses[responses.length - 1] + "." + GocCandid.getMyConfig().getQuestions()[i], responses[i]);
+    public void newCandidature(HashMap responses, String pseudo, String uuid) {
+        config.set(pseudo.toLowerCase() + ".uuid", uuid);
+        for (int i = 0; i < responses.size(); i++) {
+            config.set(pseudo + "." + GocCandid.getMyConfig().getQuestions()[i], responses.get(GocCandid.getMyConfig().getQuestions()[i]));
         }
-        config.set(responses[responses.length - 1] + ".validation", "false");
+        config.set(pseudo + ".validation", "false");
     }
 
     public String getUnaccepted() {
@@ -52,7 +50,7 @@ public class Candidatures extends AbstractFile {
         Player player = Bukkit.getServer().getPlayer(playerSender.getName());
         if (config.get(player.getName()) != null) {
             if (player.getUniqueId() == config.get(player.getName() + ".uuid")) {
-                if (config.get(player.getName() + ".validation") == "true") {
+                if (config.get(player.getName().toLowerCase() + ".validation") == "true") {
                     return true;
                 } else {
                     return false;
@@ -63,5 +61,19 @@ public class Candidatures extends AbstractFile {
         } else {
             return false;
         }
+    }
+
+    public String getOne(String pseudo) {
+        ConfigurationSection candid = config.getConfigurationSection(pseudo.toLowerCase());
+        String candidResult = ChatColor.GOLD + "" + ChatColor.UNDERLINE + pseudo + ChatColor.RESET + "\n";
+        if (config.get(pseudo) != null) {
+            for (String key : candid.getKeys(false)) {
+                candidResult = candidResult + ChatColor.BLUE + "" + ChatColor.BOLD + key + " : " + ChatColor.RESET + "" + ChatColor.AQUA + candid.get(key) + "\n";
+            }
+        } else {
+            candidResult = ChatColor.RED + "Ce joueur n'a pas fait sa candidature ou n'existe pas.";
+        }
+
+        return candidResult;
     }
 }

@@ -6,7 +6,7 @@ author: Yopaman
 commands:
   candidature:
     description: Commande de candidature, seule commande du plugin
-    usage: /<command>
+    usage: §4Erreur de syntaxe avec la commande.
     permission: goccandidature.candidature
 permissions:
   goccandid.candidature:
@@ -15,8 +15,11 @@ permissions:
   goccandid.candidature.listnew:
     description: Permet d'utiliser la commande pour lister les candidatures non acceptées.
     default: op
+  goccandid.candidature.get:
+    description: Permet d'utiliser la commande pour obtenir une candidature en particulier.
+    default: op
   goccandid.candidature.accept:
-    description: Permet d'utiliser la commande pour accepter une candidature
+    description: Permet d'utiliser la commande pour accepter une candidature.
     default: op
   goccandid.candidature.refuse:
-    description: Permet d'utilisser la commande pour refuser une candidature
+    description: Permet d'utilisser la commande pour refuser une candidature.

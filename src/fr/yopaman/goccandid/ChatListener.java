@@ -35,7 +35,6 @@ public class ChatListener implements Listener {
                     event.getPlayer().sendMessage("");
                     event.getPlayer().sendMessage(ChatColor.BOLD + messageFin);
                     enabledChat = false;
-                    GocCandid.getCandidature().newCandidature(infos);
                     GocCandid.getCandidature().save();
                     executor = "";
                     event.setCancelled(true);
