@@ -4,8 +4,8 @@
 
 package fr.yopaman.goccandid;
 
-import fr.yopaman.goccandid.fr.yopaman.goccandid.conversation.ConvFirstPrompt;
-import fr.yopaman.goccandid.fr.yopaman.goccandid.conversation.ConvPrefix;
+import fr.yopaman.goccandid.conversation.ConvFirstPrompt;
+import fr.yopaman.goccandid.conversation.ConvPrefix;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

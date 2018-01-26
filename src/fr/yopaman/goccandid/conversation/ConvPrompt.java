@@ -1,4 +1,4 @@
-package fr.yopaman.goccandid.fr.yopaman.goccandid.conversation;
+package fr.yopaman.goccandid.conversation;
 
 import fr.yopaman.goccandid.GocCandid;
 import org.bukkit.ChatColor;

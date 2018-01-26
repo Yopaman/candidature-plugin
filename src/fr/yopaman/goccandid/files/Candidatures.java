@@ -4,13 +4,11 @@
 
 package fr.yopaman.goccandid.files;
 
-import fr.yopaman.goccandid.ChatListener;
 import fr.yopaman.goccandid.GocCandid;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemorySection;
 import org.bukkit.entity.Player;
 
 import java.util.*;
