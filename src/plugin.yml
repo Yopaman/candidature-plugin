@@ -23,3 +23,5 @@ permissions:
     default: op
   goccandid.candidature.refuse:
     description: Permet d'utilisser la commande pour refuser une candidature.
+  goccandid.staff:
+    description: Permet de recevoir les notifications quand un joueur fait sa candidature + quand il y a des candidatures non acceptées.
