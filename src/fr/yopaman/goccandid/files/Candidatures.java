@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
+import javax.swing.text.StyledEditorKit;
 import java.util.*;
 
 public class Candidatures extends AbstractFile {
@@ -23,13 +24,13 @@ public class Candidatures extends AbstractFile {
         for (int i = 0; i < responses.size(); i++) {
             config.set(pseudo.toLowerCase() + "." + GocCandid.getMyConfig().getQuestions()[i], responses.get(GocCandid.getMyConfig().getQuestions()[i]));
         }
-        config.set(pseudo.toLowerCase() + ".validation", "false");
+        config.set(pseudo.toLowerCase() + ".validation", "en attente");
     }
 
     public String getUnaccepted() {
         String result = "";
         for (String username : config.getKeys(false)) {
-            if (config.get(username + ".validation").equals("false")) {
+            if (config.get(username + ".validation").equals("en attente")) {
                 result = result + (ChatColor.RESET + "====================================" + "\n" + ChatColor.GOLD + "" + ChatColor.UNDERLINE + username + "\n");
                 for (int i = 0; i < GocCandid.getMyConfig().getQuestions().length; i++) {
                     result = result + (ChatColor.BLUE + "" + ChatColor.BOLD + GocCandid.getMyConfig().getQuestions()[i] + " : " + ChatColor.RESET + "" + ChatColor.AQUA + config.getString(username + "." + GocCandid.getMyConfig().getQuestions()[i]) + "\n");
@@ -44,21 +45,14 @@ public class Candidatures extends AbstractFile {
         return result;
     }
 
-    public Boolean checkIfExist(CommandSender playerSender) {
-        Player player = Bukkit.getServer().getPlayer(playerSender.getName());
-        if (config.get(player.getName()) != null) {
-            if (player.getUniqueId() == config.get(player.getName() + ".uuid")) {
-                if (config.get(player.getName().toLowerCase() + ".validation") == "true") {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
+    public int getRefused() {
+        int refusedNumber = 0;
+        for (String username : config.getKeys(false)) {
+            if (config.get(username + ".validation").equals("en attente")) {
+                refusedNumber++;
             }
-        } else {
-            return false;
         }
+        return refusedNumber;
     }
 
     public String getOne(String pseudo) {
@@ -75,11 +69,52 @@ public class Candidatures extends AbstractFile {
         return candidResult;
     }
 
+    public Boolean checkIfExist(CommandSender playerSender) {
+        if (playerSender instanceof Player) {
+            if (config.get(playerSender.getName().toLowerCase()) != null) {
+                if (config.get(playerSender.getName().toLowerCase() + ".uuid").equals(((Player)playerSender).getUniqueId().toString())) {
+                    if (config.get(playerSender.getName().toLowerCase() + ".validation").equals("accepté")) {
+                        return true;
+                    } else {
+                        playerSender.sendMessage("pas validé");
+                        return false;
+                    }
+                } else {
+                    playerSender.sendMessage("uuid correspond pas");
+                    return false;
+                }
+            } else {
+                playerSender.sendMessage("candid existe pas");
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean isRefused(Player player) {
+        if (config.get(player.getName().toLowerCase() + ".validation").equals("refusé")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public String accept(String pseudo) {
         pseudo = pseudo.toLowerCase();
         if (config.get(pseudo) != null) {
-            config.set(pseudo + ".validation", "true");
+            config.set(pseudo + ".validation", "accepté");
             return ChatColor.GREEN + "La candidature de " + pseudo + " a été acceptée.";
+        } else {
+            return ChatColor.RED + "Ce joueur n'a pas fait de candidature ou n'existe pas.";
+        }
+    }
+
+    public String refuse(String pseudo) {
+        pseudo = pseudo.toLowerCase();
+        if (config.get(pseudo) != null) {
+            config.set(pseudo + ".validation", "refusé");
+            return ChatColor.GREEN + "La candidature de " + pseudo + " a été refusée.";
         } else {
             return ChatColor.RED + "Ce joueur n'a pas fait de candidature ou n'existe pas.";
         }

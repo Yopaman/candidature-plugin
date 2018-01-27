@@ -1,12 +1,16 @@
 package fr.yopaman.goccandid.conversation;
 
 import fr.yopaman.goccandid.GocCandid;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 import org.bukkit.entity.Player;
+
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class ConvPrompt extends StringPrompt {
 
@@ -32,6 +36,8 @@ public class ConvPrompt extends StringPrompt {
             c.getForWhom().sendRawMessage(messageFin);
             GocCandid.getCandidature().newCandidature((HashMap) c.getAllSessionData(), ((Player) c.getForWhom()).getName(), ((Player) c.getForWhom()).getUniqueId().toString());
             GocCandid.getCandidature().save();
+            Bukkit.broadcast(ChatColor.RED + "[" + ChatColor.GOLD +
+            "Candidatures" + ChatColor.RED + "] " + ChatColor.RESET + "" + ChatColor.BOLD + "" + ChatColor.GOLD + ((Player) c.getForWhom()).getPlayer().getName() + ChatColor.RESET + "" + ChatColor.AQUA + " a terminé sa candidature.", "goccandid.staff");
             return END_OF_CONVERSATION;
         } else {
             return new ConvPrompt();
