@@ -22,6 +22,7 @@ public class GocCandid extends JavaPlugin {
     public void onEnable() {
         loadDb();
         getCommand("candidature").setExecutor(new CommandCandidature(this));
+        getServer().getPluginManager().registerEvents(new ConnectionListener(), this);
     }
 
     private void loadDb() {
