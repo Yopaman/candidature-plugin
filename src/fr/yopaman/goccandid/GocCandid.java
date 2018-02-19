@@ -29,8 +29,8 @@ public class GocCandid extends JavaPlugin {
         try {
             if (!getDataFolder().exists()) {
                 getDataFolder().mkdirs();
+                saveDefaultConfig();
             }
-            saveDefaultConfig();
             this.candidatures = new Candidatures(this);
             this.config = new Config(this);
         } catch (Exception e) {

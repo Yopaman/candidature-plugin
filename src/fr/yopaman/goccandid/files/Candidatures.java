@@ -22,7 +22,12 @@ public class Candidatures extends AbstractFile {
     public void newCandidature(HashMap responses, String pseudo, String uuid) {
         config.set(pseudo.toLowerCase() + ".uuid", uuid);
         for (int i = 0; i < responses.size(); i++) {
-            config.set(pseudo.toLowerCase() + "." + GocCandid.getMyConfig().getQuestions()[i], responses.get(GocCandid.getMyConfig().getQuestions()[i]));
+            try {
+                config.set(pseudo.toLowerCase() + "." + GocCandid.getMyConfig().getQuestions()[i], responses.get(GocCandid.getMyConfig().getQuestions()[i]));
+            } catch (IllegalArgumentException e) {
+                Bukkit.getLogger().info(responses.get(GocCandid.getMyConfig().getQuestions()[i]).toString());
+                Bukkit.getLogger().severe(e.getLocalizedMessage() );
+            }
         }
         config.set(pseudo.toLowerCase() + ".validation", "en attente");
     }

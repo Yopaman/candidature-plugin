@@ -24,7 +24,7 @@ public class ConvFirstPrompt extends StringPrompt {
         if (withFirestMessage == true) {
             c.getForWhom().sendRawMessage(messageDebut + "\n");
         }
-        return ChatColor.BOLD + "" + ChatColor.BLUE + questions[0] + ChatColor.RESET + "" + ChatColor.GRAY + " (Répondez directement dans le chat)";
+        return ChatColor.BOLD + "" + ChatColor.BLUE + "" + questions[0] + ChatColor.RESET + "" + ChatColor.GRAY + " (Répondez directement dans le chat)";
     }
 
     @Override
