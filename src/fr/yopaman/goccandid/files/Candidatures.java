@@ -93,11 +93,16 @@ public class Candidatures extends AbstractFile {
     }
 
     public Boolean isRefused(Player player) {
-        if (config.get(player.getName().toLowerCase() + ".validation").equals("refusé")) {
-            return true;
+        if (config.get(player.getName().toLowerCase()) != null) {
+            if (config.get(player.getName().toLowerCase() + ".validation").equals("refusé")) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
+
     }
 
     public String accept(String pseudo) {

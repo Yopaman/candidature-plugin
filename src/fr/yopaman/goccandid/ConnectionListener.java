@@ -1,6 +1,5 @@
 package fr.yopaman.goccandid;
 
-import fr.yopaman.goccandid.conversation.ConvPrefix;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
