@@ -13,3 +13,8 @@ insultes:
   - "insulte1"
   - "insulte2"
   - "etc"
+
+mysql:
+  url: "url mysql (mysql:host/db)"
+  user: "utilisateur mysql"
+  password: "mot de passe mysql"

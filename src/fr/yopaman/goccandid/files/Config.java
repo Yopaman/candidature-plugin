@@ -26,4 +26,16 @@ public class Config extends AbstractFile {
     public String[] getInsultes() {
         return config.getStringList("insultes").toArray(new String[config.getStringList("insultes").size()]);
     }
+
+    public String getMysqlUrl() {
+        return config.getString("mysql.url");
+    }
+
+    public String getMysqlUser() {
+        return config.getString("mysql.user");
+    }
+
+    public String getMysqlPassword() {
+        return config.getString("mysql.password");
+    }
 }
