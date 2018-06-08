@@ -19,7 +19,7 @@ public class Candidature {
         this.uuid = uuid;
     }
 
-    private Connection myConnect() {
+    private static Connection myConnect() {
         try {
             String myUrl = GocCandid.getMyConfig().getMysqlUrl();
             Class.forName("com.mysql.jdbc.Driver");
@@ -65,26 +65,28 @@ public class Candidature {
         }
     }
 
-    public String getUnaccepted() {
-        String result = "";
-        Connection conn = myConnect();
-        String query = "SELECT id, pseudo FROM candidatures WHERE status = waiting";
+    public static String getUnaccepted() {
         try {
-            Statement st = conn.createStatement();
-            ResultSet candidRs = st.executeQuery(query);
+            String result = "";
+            Connection conn = myConnect();
+            String query = "SELECT id, pseudo FROM candidatures WHERE status = 'waiting'";
+            Statement candidSt = conn.createStatement();
+            ResultSet candidRs = candidSt.executeQuery(query);
+            Statement responsesSt = conn.createStatement();
             while (candidRs.next()) {
                 result = result + ChatColor.RESET + "====================================" + "\n" + ChatColor.GOLD + "" + ChatColor.UNDERLINE + candidRs.getString("pseudo") + "\n";
-                query = "SELECT question, reponse FROM reponses WHERE candid_id = " + candidRs.getInt("id");
-                ResultSet responsesRs = st.executeQuery(query);
+                query = "SELECT question, reponse FROM reponses WHERE candid_id = '" + candidRs.getString("id") + "'";
+                ResultSet responsesRs = responsesSt.executeQuery(query);
                 while (responsesRs.next()) {
                     result = result + (ChatColor.BLUE + "" + ChatColor.BOLD + responsesRs.getString("question") + " : " + ChatColor.RESET + "" + ChatColor.AQUA + responsesRs.getString("reponse") + "\n");
                 }
             }
-            st.close();
+            responsesSt.close();
+            candidSt.close();
             conn.close();
             return result;
         } catch (SQLException e) {
-            Bukkit.getLogger().warning(e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
