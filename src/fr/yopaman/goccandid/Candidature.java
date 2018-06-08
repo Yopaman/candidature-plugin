@@ -6,8 +6,6 @@ import org.bukkit.entity.Player;
 import java.sql.*;
 import java.util.HashMap;
 
-import static fr.yopaman.goccandid.GocCandid.getPlugin;
-
 
 public class Candidature {
 
@@ -38,17 +36,18 @@ public class Candidature {
             String query = "INSERT INTO candidatures (pseudo, uuid, status) values (?, ?, ?)";
             //Insert candidature
             PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(1, sender.toString());
+            preparedStmt.setString(1, sender.getName());
             preparedStmt.setString(2, uuid);
             preparedStmt.setString(3, "waiting");
             preparedStmt.execute();
             preparedStmt.close();
 
             //Select inserted candidature id
-            query = "SELECT id FROM candidatures WHERE uuid = " + uuid;
+            query = "SELECT id FROM candidatures WHERE uuid = '" + uuid + "'";
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(query);
-            int candid_id = rs.getInt(0);
+            rs.next();
+            int candid_id = rs.getInt("id");
             query = "INSERT INTO reponses (candid_id, question, reponse) values(?, ?, ?)";
 
             //Insert questions and responses
@@ -59,11 +58,10 @@ public class Candidature {
                 preparedStmt.setString(3, (String) responses.get(GocCandid.getMyConfig().getQuestions()[i]));
                 preparedStmt.execute();
                 preparedStmt.close();
-
             }
             conn.close();
         } catch (SQLException e) {
-            getPlugin().getLogger().warning(e.getMessage());
+            Bukkit.getLogger().warning(e.getLocalizedMessage());
         }
     }
 
@@ -86,7 +84,7 @@ public class Candidature {
             conn.close();
             return result;
         } catch (SQLException e) {
-            getPlugin().getLogger().warning(e.getMessage());
+            Bukkit.getLogger().warning(e.getMessage());
             return null;
         }
     }
