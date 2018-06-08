@@ -1,8 +1,12 @@
 package fr.yopaman.goccandid;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import java.sql.*;
 import java.util.HashMap;
+
+import static fr.yopaman.goccandid.GocCandid.getPlugin;
 
 
 public class Candidature {
@@ -17,27 +21,26 @@ public class Candidature {
         this.uuid = uuid;
     }
 
-    Connection myConnect() {
+    private Connection myConnect() {
         try {
             String myUrl = GocCandid.getMyConfig().getMysqlUrl();
             Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection(GocCandid.getMyConfig().getMysqlUrl(), GocCandid.getMyConfig().getMysqlUser(), GocCandid.getMyConfig().getMysqlPassword());
-        } catch (Exception e) {
-            GocCandid.getPlugin().getLogger().warning(e.getMessage());
-            return null;
+            return DriverManager.getConnection(myUrl, GocCandid.getMyConfig().getMysqlUser(), GocCandid.getMyConfig().getMysqlPassword());
+        } catch (ClassNotFoundException | SQLException e) {
+            Bukkit.getLogger().info(e.getLocalizedMessage());
         }
+        return null;
     }
 
-    void post() {
-        Connection conn = myConnect();
-        String query = "INSERT INTO candidatures (pseudo, uuid)"
-                + " values (?, ?)";
-
+    public void post() {
         try {
+            Connection conn = myConnect();
+            String query = "INSERT INTO candidatures (pseudo, uuid, status) values (?, ?, ?)";
             //Insert candidature
             PreparedStatement preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, sender.toString());
             preparedStmt.setString(2, uuid);
+            preparedStmt.setString(3, "waiting");
             preparedStmt.execute();
             preparedStmt.close();
 
@@ -60,10 +63,31 @@ public class Candidature {
             }
             conn.close();
         } catch (SQLException e) {
-            GocCandid.getPlugin().getLogger().warning(e.getMessage());
+            getPlugin().getLogger().warning(e.getMessage());
         }
     }
 
-
-
+    public String getUnaccepted() {
+        String result = "";
+        Connection conn = myConnect();
+        String query = "SELECT id, pseudo FROM candidatures WHERE status = waiting";
+        try {
+            Statement st = conn.createStatement();
+            ResultSet candidRs = st.executeQuery(query);
+            while (candidRs.next()) {
+                result = result + ChatColor.RESET + "====================================" + "\n" + ChatColor.GOLD + "" + ChatColor.UNDERLINE + candidRs.getString("pseudo") + "\n";
+                query = "SELECT question, reponse FROM reponses WHERE candid_id = " + candidRs.getInt("id");
+                ResultSet responsesRs = st.executeQuery(query);
+                while (responsesRs.next()) {
+                    result = result + (ChatColor.BLUE + "" + ChatColor.BOLD + responsesRs.getString("question") + " : " + ChatColor.RESET + "" + ChatColor.AQUA + responsesRs.getString("reponse") + "\n");
+                }
+            }
+            st.close();
+            conn.close();
+            return result;
+        } catch (SQLException e) {
+            getPlugin().getLogger().warning(e.getMessage());
+            return null;
+        }
+    }
 }

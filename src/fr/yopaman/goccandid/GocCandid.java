@@ -15,6 +15,7 @@ public class GocCandid extends JavaPlugin {
     private static Plugin plugin;
     private static Candidatures candidatures;
     private static Config config;
+    private static Candidature candidature;
 
     public ConversationFactory factory = new ConversationFactory(GocCandid.getPlugin());
 
@@ -50,4 +51,6 @@ public class GocCandid extends JavaPlugin {
     public static Config getMyConfig() {
         return config;
     }
+
+    public static Candidature getCandid() { return candidature; }
 }

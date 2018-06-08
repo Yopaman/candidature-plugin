@@ -45,7 +45,7 @@ public class CommandCandidature implements CommandExecutor, TabCompleter {
             }
         } else if(args[0].equalsIgnoreCase("listnew")) {
             if (commandSender.hasPermission(new Permission("goccandid.candidature.listnew"))) {
-                commandSender.sendMessage(GocCandid.getCandidature().getUnaccepted());
+                commandSender.sendMessage(GocCandid.getCandid().getUnaccepted());
             } else {
                 commandSender.sendMessage("Vous n'avez pas la permission d'executer cette commande !");
             }
