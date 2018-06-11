@@ -32,7 +32,6 @@ public class GocCandid extends JavaPlugin {
                 getDataFolder().mkdirs();
                 saveDefaultConfig();
             }
-            this.candidatures = new Candidatures(this);
             this.config = new Config(this);
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,13 +43,7 @@ public class GocCandid extends JavaPlugin {
         return plugin;
     }
 
-    public static Candidatures getCandidature() {
-        return candidatures;
-    }
-
     public static Config getMyConfig() {
         return config;
     }
-
-    public static Candidature getCandid() { return candidature; }
 }

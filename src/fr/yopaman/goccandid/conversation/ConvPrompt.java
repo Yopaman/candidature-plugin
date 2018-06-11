@@ -37,8 +37,6 @@ public class ConvPrompt extends StringPrompt {
             c.getForWhom().sendRawMessage(messageFin);
             Candidature candid = new Candidature(((HashMap) c.getAllSessionData()), ((Player) c.getForWhom()), ((Player) c.getForWhom()).getUniqueId().toString());
             candid.post();
-            /*GocCandid.getCandidature().newCandidature(((HashMap) c.getAllSessionData()), ((Player) c.getForWhom()).getName(), ((Player) c.getForWhom()).getUniqueId().toString());
-            GocCandid.getCandidature().save();*/
             Bukkit.broadcast(ChatColor.RED + "[" + ChatColor.GOLD +
             "Candidatures" + ChatColor.RED + "] " + ChatColor.RESET + "" + ChatColor.BOLD + "" + ChatColor.GOLD + ((Player) c.getForWhom()).getPlayer().getName() + ChatColor.RESET + "" + ChatColor.AQUA + " a terminé sa candidature.", "goccandid.staff");
             return END_OF_CONVERSATION;
