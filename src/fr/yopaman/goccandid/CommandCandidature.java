@@ -32,7 +32,7 @@ public class CommandCandidature implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if (args.length == 0) {
             if (commandSender.hasPermission(new Permission("goccandid.candidature"))) {
-                if (!GocCandid.getCandidature().checkIfExist(commandSender)) {
+                if (!Candidature.checkIfExist(commandSender)) {
                     plugin.factory.withFirstPrompt(new ConvFirstPrompt(true)).thatExcludesNonPlayersWithMessage("Seul les joueurs peuvent faire leur candidature !")
                     .withPrefix(new ConvPrefix()).buildConversation((Conversable) commandSender).begin();
                     Bukkit.broadcast(ChatColor.RED + "[" + ChatColor.GOLD +
@@ -45,14 +45,14 @@ public class CommandCandidature implements CommandExecutor, TabCompleter {
             }
         } else if(args[0].equalsIgnoreCase("listnew")) {
             if (commandSender.hasPermission(new Permission("goccandid.candidature.listnew"))) {
-                commandSender.sendMessage(GocCandid.getCandid().getUnaccepted());
+                commandSender.sendMessage(Candidature.getUnaccepted());
             } else {
                 commandSender.sendMessage("Vous n'avez pas la permission d'executer cette commande !");
             }
         } else if(args[0].equalsIgnoreCase("get")) {
             if (commandSender.hasPermission(new Permission("goccandid.candidature.get"))) {
                 if (args.length > 1) {
-                    commandSender.sendMessage(GocCandid.getCandidature().getOne(args[1]));
+                    commandSender.sendMessage(Candidature.getOne(args[1]));
                 } else {
                     return false;
                 }
@@ -62,13 +62,7 @@ public class CommandCandidature implements CommandExecutor, TabCompleter {
         } else if(args[0].equalsIgnoreCase("accept")) {
             if (commandSender.hasPermission(new Permission("goccandid.candidature.accept"))) {
                 if (args.length > 1) {
-                    commandSender.sendMessage(GocCandid.getCandidature().accept(args[1]));
-                    GocCandid.getCandidature().save();
-                    Player player = Bukkit.getServer().getPlayer(args[1]);
-                    if (player.isOnline()) {
-                        player.sendMessage(ChatColor.RED + "[" + ChatColor.GOLD +
-                        "Candidatures" + ChatColor.RED + "] " + ChatColor.RESET + "" + ChatColor.GREEN + "Votre candidature a été acceptée :)");
-                    }
+                    commandSender.sendMessage(Candidature.accept(args[1]));
                 } else {
                     return false;
                 }
@@ -78,13 +72,8 @@ public class CommandCandidature implements CommandExecutor, TabCompleter {
         } else if(args[0].equalsIgnoreCase("refuse")) {
             if (commandSender.hasPermission(new Permission("goccandid.candidature.refuse"))) {
                 if (args.length > 1) {
-                    commandSender.sendMessage(GocCandid.getCandidature().refuse(args[1]));
-                    GocCandid.getCandidature().save();
-                    Player player = Bukkit.getServer().getPlayer(args[1]);
-                    if (player.isOnline()) {
-                        player.sendMessage(ChatColor.RED + "[" + ChatColor.GOLD +
-                        "Candidatures" + ChatColor.RED + "] " + ChatColor.RESET + "" + ChatColor.RED + "Votre candidature a été refusée, vous devez la refaire avec la commande /candidature.");
-                    }
+                    commandSender.sendMessage(Candidature.refuse(args[1]));
+
                 } else {
                     return false;
                 }

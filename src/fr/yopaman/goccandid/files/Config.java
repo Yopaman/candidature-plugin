@@ -28,7 +28,7 @@ public class Config extends AbstractFile {
     }
 
     public String getMysqlUrl() {
-        return config.getString("mysql.url");
+        return "jdbc:" + config.getString("mysql.url");
     }
 
     public String getMysqlUser() {
@@ -37,5 +37,9 @@ public class Config extends AbstractFile {
 
     public String getMysqlPassword() {
         return config.getString("mysql.password");
+    }
+
+    public String getEncryptionPassword() {
+        return config.getString("mysql.encryption_password");
     }
 }

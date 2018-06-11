@@ -15,6 +15,7 @@ insultes:
   - "etc"
 
 mysql:
-  url: "url mysql (mysql:host/db)"
+  url: "url mysql (mysql://domaine.com/db)"
   user: "utilisateur mysql"
   password: "mot de passe mysql"
+  encryption_password: "mot de passe d'encryption pour les données"
